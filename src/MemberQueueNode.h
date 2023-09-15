@@ -9,7 +9,6 @@ private:
 	int month;
 	int day;
 	char term;
-	MemberQueueNode* next;
 
 public:
 	MemberQueueNode(char* p_name,int p_age,int p_year,
@@ -20,15 +19,7 @@ public:
 		month = p_month;
 		day = p_day;
 		term = p_term;
-		next = nullptr;
 	}
 	~MemberQueueNode() {}
 
-	void setNext(MemberQueueNode* param){
-		next = param;
-	}
-
-	MemberQueueNode* getNext() const {
-		return next;
-	}
 };

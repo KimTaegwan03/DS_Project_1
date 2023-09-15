@@ -2,53 +2,54 @@
 
 MemberQueue::MemberQueue()
 {
-    head = nullptr;
-    tail = nullptr;
-    cur = 0;
+    head_idx = -1;
+    tail_idx = -1;
+    last = 0;
 }
 
 MemberQueue::~MemberQueue()
 {
-	MemberQueueNode* del;
-    while(head){
-        del = head->getNext();
-        delete head;
-        head = del;
-    }
+
 }
 
 bool MemberQueue::empty()
 {
-    if(cur == 0) return 1;
+    if(head_idx == tail_idx) {
+        if(last == 0) return 1;
+        else return 0;
+    }
     else return 0;
 }
 
 bool MemberQueue::full()
 {
-    if(cur == 100) return 1;
+    if(head_idx == tail_idx) {
+        if(last == 1) return 1;
+        else return 0;
+    }
     else return 0;
 }
 
-void MemberQueue::push(MemberQueueNode* p_node)
+void MemberQueue::push(MemberQueueNode p_node)
 {
 	if(!this->full()){
-        cur++;
-        tail->setNext(p_node);
-        tail = p_node;
+        tail_idx = (tail_idx+1)%100;
+        Queue[tail_idx] = p_node;
+        last = 1;
     }
 }
 
-MemberQueueNode* MemberQueue::pop()
+MemberQueueNode MemberQueue::pop()
 {
     if(!this->empty()){
-        MemberQueueNode* out = head;
-        head = head->getNext();
-        cur--;
-        return out;
+        head_idx = (head_idx+1)%100;
+        return Queue[head_idx];
+        last = 0;
     }
 }
 
-MemberQueueNode* MemberQueue::front()
+MemberQueueNode MemberQueue::front()
 {
-    return head;
+    if(!empty())
+        return Queue[head_idx];
 }
