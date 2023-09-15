@@ -16,7 +16,6 @@ private:
 
 	MemberQueue* memq;
 	TermsLIST* termlis;
-	TermsBST* termBST;
 	NameBST* nameBST;
 
 

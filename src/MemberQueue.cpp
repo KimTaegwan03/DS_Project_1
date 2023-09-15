@@ -30,11 +30,12 @@ bool MemberQueue::full()
     else return 0;
 }
 
-void MemberQueue::push(MemberQueueNode p_node)
+void MemberQueue::push(char* p_name,int p_age,int p_year,
+	int p_month,int p_day,char p_term)
 {
 	if(!this->full()){
         tail_idx = (tail_idx+1)%100;
-        Queue[tail_idx] = p_node;
+        Queue[tail_idx].setInfo(p_name,p_age,p_year,p_month,p_day,p_term);
         last = 1;
     }
 }

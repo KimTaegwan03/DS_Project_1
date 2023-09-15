@@ -3,7 +3,13 @@
 class TermsBSTNode
 {
 private:
-
+	char name[21];
+	int age;
+	int year;
+	int month;
+	int day;
+	int end_year, end_month, end_day;
+	char term;
 	TermsBSTNode*	left;
 	TermsBSTNode*	right;
 
@@ -14,6 +20,17 @@ public:
 
 	TermsBSTNode*	getLeft()			{ return left; }
 	TermsBSTNode*	getRight()			{ return right; }
+	
+	char* getName(){return name;};
+	int getAge(){return age;}
+	int getYear(){return year;}
+	int getMonth(){return month;}
+	int getDay(){return day;}
+	int getEndYear(){return end_year;}
+	int getEndMonth(){return end_month;}
+	int getEndDay(){return end_day;}
+
+
 
 	void setLeft (TermsBSTNode* left)	{ this->left = left; }
 	void setRight(TermsBSTNode* right)	{ this->right = right; }

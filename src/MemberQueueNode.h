@@ -11,8 +11,12 @@ private:
 	char term;
 
 public:
-	MemberQueueNode(char* p_name,int p_age,int p_year,
-	int p_month,int p_day,char p_term) {
+	MemberQueueNode() {
+	}
+	~MemberQueueNode() {}
+
+	void setInfo(char* p_name,int p_age,int p_year,
+	int p_month,int p_day,char p_term){
 		memcpy(name,p_name,21);
 		age = p_age;
 		year = p_year;
@@ -20,6 +24,4 @@ public:
 		day = p_day;
 		term = p_term;
 	}
-	~MemberQueueNode() {}
-
 };

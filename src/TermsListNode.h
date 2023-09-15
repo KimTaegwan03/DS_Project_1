@@ -3,13 +3,15 @@
 class TermsListNode
 {
 private:
-
-	TermsListNode*	next;
+	TermsBST* bst;
+	char term;
+	int member;
+	TermsListNode* next;
 
 
 public:
-	TermsListNode() {}
-	~TermsListNode() {}
+	TermsListNode(char p_term) {term = p_term;}
+	~TermsListNode() {delete bst;}
 
 	TermsListNode*	getNext()		 { return next; }
 

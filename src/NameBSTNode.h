@@ -3,7 +3,12 @@
 class NameBSTNode
 {
 private:
-
+	char name[21];
+	int age;
+	int year;
+	int month;
+	int day;
+	char term;
 	NameBSTNode*	left;
 	NameBSTNode*	right;
 	

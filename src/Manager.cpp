@@ -4,14 +4,12 @@ Manager::Manager()
 {
     memq = nullptr;
     termlis = nullptr;
-    termBST = nullptr;
     nameBST = nullptr;
 }
 Manager::~Manager()
 {
     if(memq) delete memq;
     if(termlis) delete termlis;
-    if(termBST) delete termBST;
     if(nameBST) delete nameBST;
 }
 
@@ -26,10 +24,10 @@ void Manager::run(const char* command)
         exit(-1);
     }
     
-    string cmd;
+    char cmd[64];
     while(!fcmd.eof()){
-        getline(fcmd,cmd);
-        if(cmd == "LOAD"){
+        fcmd >> cmd;
+        if(!strcmp(cmd,"LOAD")){
             if(!memq){
                 memq = new MemberQueue;
                 LOAD();
@@ -38,11 +36,34 @@ void Manager::run(const char* command)
                 PrintErrorCode(100);
             }
         }
-        else if(cmd == "ADD"){
+        else if(!strcmp(cmd,"ADD")){
+            char name[21];
+            char date[11];
+            int age;
+            int year,month,day;
+            char term;
+
+            fcmd >> name >> age >> date >> term;
+
+            char* p = strtok(date,"-");
+            if(p)
+                year = atoi(p);
+            else PrintErrorCode(200);
+            strtok(NULL,"-");
+            if(p)
+                month = atoi(p);
+            else PrintErrorCode(200);
+            strtok(NULL,"-");
+            if(p)
+                day = atoi(p);
+            else PrintErrorCode(200);
+
+            if(!memq->full())
+                memq->push(name,age,year,month,day,term);
 
         }
-        else if(cmd == "QPOP"){
-
+        else if(!strcmp(cmd,"QPOP")){
+            
         }
         else if(cmd == "SEARCH"){
 
@@ -90,14 +111,35 @@ void Manager::LOAD()
         exit(-1);
     }
 
+    char data_tmp[100];
     char name[21];
-    int age;
     char date[11];
+    int age;
+    int year,month,day;
     char term;
 
     while(!fdata.eof()){
         fdata >> name >> age >> date >> term;
-        //if( )
+        char* p = strtok(date,"-");
+        if(p)
+            year = atoi(p);
+        else PrintErrorCode(200);
+        strtok(NULL,"-");
+        if(p)
+            month = atoi(p);
+        else PrintErrorCode(200);
+        strtok(NULL,"-");
+        if(p)
+            day = atoi(p);
+        else PrintErrorCode(200);
+        if(!memq->full())
+            memq->push(name,age,year,month,day,term);
+
+        // fdata.getline(data_tmp,100);
+        // strtok(p," ");
+        // name = p;
+        // strtok(NULL," ");
+
     }
 }
 // LOAD
