@@ -31,7 +31,6 @@ int TermsBST::compare_term(TermsBSTNode* first,TermsBSTNode* second){
 
 void TermsBST::Insert(TermsBSTNode* param){
 	TermsBSTNode* cur = root;
-	TermsBSTNode* pre;
 	while(cur){
 		if(compare_term(cur,param)>0){
 			if(cur->getLeft()==0){
