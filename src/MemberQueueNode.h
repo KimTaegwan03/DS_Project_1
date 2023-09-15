@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+#include <cstring>
 
 class MemberQueueNode
 {
@@ -17,7 +19,7 @@ public:
 
 	void setInfo(char* p_name,int p_age,int p_year,
 	int p_month,int p_day,char p_term){
-		memcpy(name,p_name,21);
+		strcpy(name,p_name);
 		age = p_age;
 		year = p_year;
 		month = p_month;

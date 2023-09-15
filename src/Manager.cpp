@@ -78,7 +78,7 @@ void Manager::run(const char* command)
 
         }
         else {
-            this->PrintErrorCode(1000);
+            (1000);
         }
     }
     // Run command
