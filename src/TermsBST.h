@@ -1,5 +1,6 @@
 #pragma once
 #include "TermsBSTNode.h"
+#include <fstream>
 
 class TermsBST
 {
@@ -12,14 +13,17 @@ public:
 
 	TermsBSTNode* getRoot();
 
+	int compare_end_term(TermsBSTNode* first,TermsBSTNode* second);
+
 	int compare_term(TermsBSTNode* first,TermsBSTNode* second);
 
 	void Insert(TermsBSTNode* param);
 
 	void Print(TermsBSTNode* node);
 
-	void Delete(int p_year,int p_month,int p_day);
+	TermsBSTNode* Delete(TermsBSTNode* cur,TermsBSTNode* find);
 
+	TermsBSTNode* Find_Node(TermsBSTNode* cur,TermsBSTNode* find);
 	// insert
 	// print
 	// delete
