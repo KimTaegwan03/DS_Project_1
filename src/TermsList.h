@@ -5,7 +5,7 @@ class TermsLIST
 {
 private:
 	TermsListNode* head;
-
+	TermsListNode* tail;
 
 public:
 	TermsLIST();
@@ -16,9 +16,11 @@ public:
 	void Insert(char* p_name,int p_age,int p_year,
 	int p_month,int p_day,char p_term);
 
-	void Search(char* p_name);
+	void Search(int p_year,
+	int p_month,int p_day,char p_term);
 
-	void Delete(char* p_name);
+	void Delete(int p_year,
+	int p_month,int p_day,char p_term);
 
 	// insert
 	// search
