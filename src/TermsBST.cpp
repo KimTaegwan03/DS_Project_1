@@ -37,6 +37,7 @@ void TermsBST::Insert(TermsBSTNode* param){
 		if(compare_end_term(cur,param)>0){
 			if(cur->getLeft()==0){
 				cur->setLeft(param);
+				break;
 			}
 			else{
 				cur = cur->getLeft();
@@ -45,6 +46,7 @@ void TermsBST::Insert(TermsBSTNode* param){
 		else if(compare_end_term(cur,param)<=0){
 			if(cur->getRight()==0){
 				cur->setRight(param);
+				break;
 			}
 			else{
 				cur = cur->getRight();
@@ -68,9 +70,9 @@ void TermsBST::Print(TermsBSTNode* node){
 
 TermsBSTNode* TermsBST::Delete(TermsBSTNode* cur,TermsBSTNode* find){
 	if(!cur) return cur;
-	if(compare_end_term(cur,find)<0)
+	if(compare_end_term(cur,find)>0)
 		cur->setLeft(Delete(cur->getLeft(),find));
-	else if(compare_end_term(cur,find)>0)
+	else if(compare_end_term(cur,find)<0)
 		cur->setRight(Delete(cur->getRight(),find));
 	else{	//find
 		if(cur->getLeft()==0){

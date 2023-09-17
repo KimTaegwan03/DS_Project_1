@@ -17,7 +17,40 @@ private:
 
 
 public:
-	TermsBSTNode() {}
+	TermsBSTNode(char* p_name, int p_age, int p_year,
+		int p_month, int p_day, char p_term) {
+		strcpy(name, p_name);
+		age = p_age;
+		year = p_year;
+		month = p_month;
+		day = p_day;
+		end_year = p_year;
+		end_month = p_month;
+		end_day = p_day;
+		term = p_term;
+		
+		if (p_term == 'A') {
+			end_month += 6;
+			if (end_month > 12) {
+				end_year++;
+				end_month -= 12;
+			}
+		}
+		else if (p_term == 'B') {
+			end_year++;
+		}
+		else if (p_term == 'C') {
+			end_year+=2;
+		}
+		else if (p_term == 'D') {
+			end_year+=3;
+		}
+	}
+	TermsBSTNode(int p_year, int p_month, int p_day) {
+		end_year = p_year;
+		end_month = p_month;
+		end_day = p_day;
+	}
 	~TermsBSTNode() {}
 
 	TermsBSTNode*	getLeft()			{ return left; }
