@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <cstring>
 
 class TermsBSTNode
 {
@@ -30,9 +31,20 @@ public:
 	int getEndYear(){return end_year;}
 	int getEndMonth(){return end_month;}
 	int getEndDay(){return end_day;}
+	char getTerm(){return term;}
 
 
-
+	void setInfo(TermsBSTNode* param){
+		strcpy(name,param->getName());
+		age = param->getAge();
+		year = param->getYear();
+		month = param->getMonth();
+		day = param->getDay();
+		end_year = param->getEndYear();
+		end_month = param->getEndMonth();
+		end_day = param->getEndDay();
+		term = param->getTerm();
+	}
 	void setLeft (TermsBSTNode* left)	{ this->left = left; }
 	void setRight(TermsBSTNode* right)	{ this->right = right; }
 };

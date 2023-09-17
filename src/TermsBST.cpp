@@ -61,6 +61,7 @@ void TermsBST::Print(TermsBSTNode* node){
 		Print(node->getLeft());
 		flog.open("log.txt",ios::app);
 		flog << node->getName()<<'/'<<node->getAge()<<'/'<<node->getYear()<<'-'<<node->getMonth()<<'-'<<node->getDay()<<'/'<<node->getEndYear()<<'-'<<node->getEndMonth()<<'-'<<node->getEndDay()<<endl;
+		flog.close();
 		Print(node->getRight());
 	}
 }
@@ -69,18 +70,35 @@ TermsBSTNode* TermsBST::Delete(TermsBSTNode* cur,TermsBSTNode* find){
 	if(!cur) return cur;
 	if(compare_end_term(cur,find)<0)
 		cur->setLeft(Delete(cur->getLeft(),find));
+	else if(compare_end_term(cur,find)>0)
+		cur->setRight(Delete(cur->getRight(),find));
+	else{	//find
+		if(cur->getLeft()==0){
+			TermsBSTNode* tmp = cur->getRight();
+			delete cur;
+			return tmp;
+		}
+		else if(cur->getRight()==0){
+			TermsBSTNode* tmp = cur->getLeft();
+			delete cur;
+			return tmp;
+		}
+
+		TermsBSTNode* tmp = Find_Min_Node(cur->getRight());
+		cur->setInfo(tmp);
+		cur->setRight(Delete(cur->getRight(),tmp));
+	}
+	return cur;
 		
 
 }
 
-TermsBSTNode* TermsBST::Find_Node(TermsBSTNode* cur,TermsBSTNode* find){
-	TermsBSTNode* out = nullptr;
-	if(cur != 0){
-		if(!compare_end_term(cur,find)) return cur;
-		if(out = Find_Node(cur->getLeft(),find)) return out;
-		if(out = Find_Node(cur->getRight(),find)) return out;
+TermsBSTNode* TermsBST::Find_Min_Node(TermsBSTNode* cur){
+	TermsBSTNode* ptr = cur;
+	while(ptr->getLeft()){
+		ptr = ptr->getLeft();
 	}
-	return out;
+	return ptr;
 }
 // insert
 

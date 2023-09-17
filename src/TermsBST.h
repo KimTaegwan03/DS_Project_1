@@ -23,7 +23,7 @@ public:
 
 	TermsBSTNode* Delete(TermsBSTNode* cur,TermsBSTNode* find);
 
-	TermsBSTNode* Find_Node(TermsBSTNode* cur,TermsBSTNode* find);
+	TermsBSTNode* Find_Min_Node(TermsBSTNode* cur);
 	// insert
 	// print
 	// delete
