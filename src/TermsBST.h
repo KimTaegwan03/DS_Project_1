@@ -27,4 +27,5 @@ public:
 	// insert
 	// print
 	// delete
+	TermsBSTNode* Search(TermsBSTNode* find);
 };

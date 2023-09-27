@@ -1,5 +1,6 @@
 #pragma once
 #include "NameBSTNode.h"
+#include <fstream>
 
 class NameBST
 {
@@ -11,6 +12,16 @@ public:
 	~NameBST();
 
 	NameBSTNode* getRoot();
+
+	void Insert(NameBSTNode* param);
+
+	void Print(NameBSTNode* node);
+
+	NameBSTNode* Delete(NameBSTNode* cur, NameBSTNode* find);
+
+	NameBSTNode* Find_Min_Node(NameBSTNode* cur);
+
+	NameBSTNode* Search(NameBSTNode* find);
 
 	// insert
 	// search

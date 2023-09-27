@@ -23,19 +23,19 @@ void TermsLIST::Insert(char* p_name,int p_age,int p_year, int p_month,int p_day,
 	TermsBSTNode* ptr = new TermsBSTNode(p_name,p_age,p_year,p_month,p_day,p_term);
 	TermsListNode* cur = head;
 
-	while(cur){
+	while(cur){	//find same term tree
 		if(cur->getTerm() == p_term)break;
 		else cur = cur->getNext();
 	}
 	
-	if(cur==0){
+	if(cur==0){	//if there is no tree, make new tree and insert
 		TermsListNode* tmp = new TermsListNode(p_term);
 		tail->setNext(tmp);
 		tail = tmp;
 		tmp->getBST()->Insert(ptr);
 		tmp->increaseMem();
 	}
-	else{
+	else{	//insert tree node to tree, increase member
 		cur->getBST()->Insert(ptr);
 		cur->increaseMem();
 	}
@@ -43,6 +43,38 @@ void TermsLIST::Insert(char* p_name,int p_age,int p_year, int p_month,int p_day,
 }
 // insert
 
+TermsBSTNode* TermsLIST::Search(int p_year,
+	int p_month,int p_day,char p_term){
+	TermsListNode* cur = head;
+	while(cur){
+		if(cur->getTerm()==p_term) break;
+		else cur = cur->getNext();
+	}
+
+	if(cur){	//if find same term tree, search in tree
+		TermsBSTNode* ptr = new TermsBSTNode(p_year,p_month,p_day);
+		TermsBSTNode* out = cur->getBST()->Search(ptr);
+		delete ptr;
+		return out;
+	}	//else return nullptr
+	else return nullptr;
+
+}
+
 // search
 
+
+void TermsLIST::Delete(int p_year, int p_month,int p_day,char p_term){
+	TermsListNode* cur = head;
+	while(cur){
+		if(cur->getTerm()==p_term) break;
+		else cur = cur->getNext();
+	}
+
+	if(cur){
+		TermsBSTNode* ptr = new TermsBSTNode(p_year,p_month,p_day);
+		cur->getBST()->Delete(cur->getBST()->getRoot(),ptr);
+		delete ptr;
+	}
+}
 // delete

@@ -107,3 +107,17 @@ TermsBSTNode* TermsBST::Find_Min_Node(TermsBSTNode* cur){
 // print
 
 // delete
+TermsBSTNode* TermsBST::Search(TermsBSTNode* find){
+	TermsBSTNode* cur = root;
+	while(cur){
+		if(compare_end_term(cur,find)>0)
+			cur = cur->getLeft();
+		else if(compare_end_term(cur,find)<0)
+			cur = cur->getRight();
+		else break;
+
+		if(!cur) break;
+	}
+	return cur;
+
+}
