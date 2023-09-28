@@ -23,8 +23,10 @@ public:
 	TermsListNode*	getNext()		 { return next; }
 	char getTerm(){return term;}
 	TermsBST* getBST(){return bst;}
+	int getMem() {return member;}
 
 	void increaseMem() {member++;}
+	void decreaseMem() {member--;}
 
 	void setNext(TermsListNode* next)	 { this->next = next; }
 };

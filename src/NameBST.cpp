@@ -52,9 +52,9 @@ void NameBST::Print(NameBSTNode* node){
 
 NameBSTNode* NameBST::Delete(NameBSTNode* cur, NameBSTNode* find){
 	if(!cur) return cur;
-	if(strcmp(cur->getName(),find->getName())<0)
+	if(strcmp(cur->getName(),find->getName())>0)
 		cur->setLeft(Delete(cur->getLeft(),find));
-	else if(strcmp(cur->getName(),find->getName())>0)
+	else if(strcmp(cur->getName(),find->getName())<0)
 		cur->setRight(Delete(cur->getRight(),find));
 	else{
 		if(cur->getLeft()==0){
@@ -84,7 +84,17 @@ NameBSTNode* NameBST::Find_Min_Node(NameBSTNode* cur){
 }
 
 NameBSTNode* NameBST::Search(NameBSTNode* find){
+	NameBSTNode* cur = root;
+	while(cur){
+		if(strcmp(cur->getName(),find->getName())>0)
+			cur = cur->getLeft();
+		else if(strcmp(cur->getName(),find->getName())<0)
+			cur = cur->getRight();
+		else break;
 
+		if(!cur) break;
+	}
+	return cur;
 }
 
 // insert
