@@ -33,6 +33,12 @@ int TermsBST::compare_end_term(TermsBSTNode* first,TermsBSTNode* second){
 
 void TermsBST::Insert(TermsBSTNode* param){
 	TermsBSTNode* cur = root;
+
+	if (!root) {
+		root = param;
+		return;
+	}
+
 	while(cur){
 		if(compare_end_term(cur,param)>0){
 			if(cur->getLeft()==0){

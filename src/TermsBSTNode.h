@@ -19,7 +19,7 @@ private:
 public:
 	TermsBSTNode(char* p_name, int p_age, int p_year,
 		int p_month, int p_day, char p_term) {
-		strcpy(name, p_name);
+		strcpy_s(name, p_name);
 		age = p_age;
 		year = p_year;
 		month = p_month;
@@ -68,7 +68,7 @@ public:
 
 
 	void setInfo(TermsBSTNode* param){
-		strcpy(name,param->getName());
+		strcpy_s(name,param->getName());
 		age = param->getAge();
 		year = param->getYear();
 		month = param->getMonth();

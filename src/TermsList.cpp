@@ -1,8 +1,9 @@
 #include "TermsList.h"
 
-TermsLIST::TermsLIST(): head(nullptr)
+TermsLIST::TermsLIST()
 {
-
+	head = 0;
+	tail = 0;
 }
 TermsLIST::~TermsLIST()
 {
@@ -29,11 +30,19 @@ void TermsLIST::Insert(char* p_name,int p_age,int p_year, int p_month,int p_day,
 	}
 	
 	if(cur==0){	//if there is no tree, make new tree and insert
-		TermsListNode* tmp = new TermsListNode(p_term);
-		tail->setNext(tmp);
-		tail = tmp;
-		tmp->getBST()->Insert(ptr);
-		tmp->increaseMem();
+		if (!head) {
+			TermsListNode* tmp = new TermsListNode(p_term);
+			head = tail = tmp;
+			tmp->getBST()->Insert(ptr);
+			tmp->increaseMem();
+		}
+		else {
+			TermsListNode* tmp = new TermsListNode(p_term);
+			tail->setNext(tmp);
+			tail = tmp;
+			tmp->getBST()->Insert(ptr);
+			tmp->increaseMem();
+		}
 	}
 	else{	//insert tree node to tree, increase member
 		cur->getBST()->Insert(ptr);
@@ -66,7 +75,7 @@ TermsBSTNode* TermsLIST::Search(int p_year,
 
 void TermsLIST::Delete(int p_year, int p_month,int p_day,char p_term){
 	TermsListNode* cur = head;
-	TermsListNode* pre;
+	TermsListNode* pre = nullptr;
 	while(cur){
 		if(cur->getTerm()==p_term) break;
 		else {

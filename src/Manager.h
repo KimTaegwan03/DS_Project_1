@@ -24,14 +24,19 @@ public:
 	~Manager();
 
 	void run(const char* command);
-	
+
 	void PrintSuccess(const char* cmd);
 	void PrintErrorCode(int num);
 
 	void LOAD();
 	// LOAD
+
+	void ADD(char* info);
 	// ADD
+
+	void QPOP();
 	// QPOP
+	void SEARCH(char* find);
 	// SEARCH
 	// PRINT
 	// DELETE
