@@ -154,6 +154,7 @@ void Manager::LOAD()
         // strtok(NULL," ");
 
     }
+    PrintSuccess("LOAD");
 }
 // LOAD
 
@@ -197,8 +198,10 @@ void Manager::ADD(char* info) {
     p = strtok(NULL, " ");
     term = p[0];
 
-    if (!memq->full())
+    if (!memq->full()) {
         memq->push(name, age, year, month, day, term);
+        PrintSuccess("ADD");
+    }
 
 }
 // ADD
@@ -213,6 +216,7 @@ void Manager::QPOP() {
             nameBST->Insert(nameNode);
             memq->pop();
         }
+        PrintSuccess("QPOP");
     }
 }
 // QPOP
@@ -223,7 +227,7 @@ void Manager::SEARCH(char* find) {
     if (search_node) {
         flog << "===== SEARCH =====\n";
         flog << search_node->getName() << '/' << search_node->getAge() << '/' << search_node->getYear()<<'-'<< search_node->getMonth()<<'-'<< search_node->getDay()<<'/' << search_node->getEndYear() << '-' << search_node->getEndMonth() << '-' << search_node->getEndDay()<<endl;
-        flog << "===============\n";
+        flog << "===============\n\n";
     }
     delete find_node;
 }
