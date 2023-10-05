@@ -19,7 +19,7 @@ public:
 
 	void Insert(TermsBSTNode* param);
 
-	void Print(TermsBSTNode* node);
+	void Print(std::ofstream& flog, TermsBSTNode* node);
 
 	TermsBSTNode* Delete(TermsBSTNode* cur,TermsBSTNode* find);
 

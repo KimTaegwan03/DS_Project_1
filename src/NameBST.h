@@ -15,7 +15,7 @@ public:
 
 	void Insert(NameBSTNode* param);
 
-	void Print(NameBSTNode* node);
+	void Print(std::ofstream& flog, NameBSTNode* node);
 
 	NameBSTNode* Delete(NameBSTNode* cur, NameBSTNode* find);
 

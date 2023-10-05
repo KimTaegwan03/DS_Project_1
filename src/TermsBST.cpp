@@ -7,7 +7,7 @@ TermsBST::TermsBST() : root(nullptr)
 }
 TermsBST::~TermsBST()
 {
-
+	if(root) delete root;
 }
 
 
@@ -16,8 +16,8 @@ TermsBSTNode* TermsBST::getRoot()
 	return root;
 }
 
-int TermsBST::compare_end_term(TermsBSTNode* first,TermsBSTNode* second){
-	if(first->getEndYear()>second->getEndYear()) return 1;
+int TermsBST::compare_end_term(TermsBSTNode* first,TermsBSTNode* second){	// return 1, when first is later
+	if(first->getEndYear()>second->getEndYear()) return 1;					// return -1, when first is faster
 	else if(first->getEndYear()<second->getEndYear()) return -1;
 	else{
 		if(first->getEndMonth()>second->getEndMonth()) return 1;
@@ -33,9 +33,15 @@ int TermsBST::compare_end_term(TermsBSTNode* first,TermsBSTNode* second){
 
 void TermsBST::Insert(TermsBSTNode* param){
 	TermsBSTNode* cur = root;
+
+	if (!root) {
+		root = param;
+		return;
+	}
+
 	while(cur){
 		if(compare_end_term(cur,param)>0){
-			if(cur->getLeft()==0){
+			if(!cur->getLeft()){
 				cur->setLeft(param);
 				break;
 			}
@@ -44,7 +50,7 @@ void TermsBST::Insert(TermsBSTNode* param){
 			}
 		}
 		else if(compare_end_term(cur,param)<=0){
-			if(cur->getRight()==0){
+			if(!cur->getRight()){
 				cur->setRight(param);
 				break;
 			}
@@ -57,14 +63,11 @@ void TermsBST::Insert(TermsBSTNode* param){
 
 }
 
-void TermsBST::Print(TermsBSTNode* node){
-	if(node != 0){
-		ofstream flog;
-		Print(node->getLeft());
-		flog.open("log.txt",ios::app);
+void TermsBST::Print(ofstream& flog, TermsBSTNode* node){
+	if(node){
+		Print(flog,node->getLeft());
 		flog << node->getName()<<'/'<<node->getAge()<<'/'<<node->getYear()<<'-'<<node->getMonth()<<'-'<<node->getDay()<<'/'<<node->getEndYear()<<'-'<<node->getEndMonth()<<'-'<<node->getEndDay()<<endl;
-		flog.close();
-		Print(node->getRight());
+		Print(flog,node->getRight());
 	}
 }
 
@@ -115,8 +118,6 @@ TermsBSTNode* TermsBST::Search(TermsBSTNode* find){
 		else if(compare_end_term(cur,find)<0)
 			cur = cur->getRight();
 		else break;
-
-		if(!cur) break;
 	}
 	return cur;
 

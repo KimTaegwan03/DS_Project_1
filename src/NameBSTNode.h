@@ -45,11 +45,18 @@ public:
 		else if (p_term == 'D') {
 			end_year+=3;
 		}
+		left = nullptr;
+		right = nullptr;
 	}
 	NameBSTNode(char* p_name){
 		strcpy(name,p_name);
+		left = nullptr;
+		right = nullptr;
 	}
-	~NameBSTNode() {}
+	~NameBSTNode() {
+		if(left) delete left;
+		if(right) delete right;
+	}
 
 	NameBSTNode*	getLeft()			{ return left; }
 	NameBSTNode*	getRight()			{ return right; }

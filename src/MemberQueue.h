@@ -6,7 +6,7 @@ class MemberQueue
 private:
 	MemberQueueNode Queue[100];
 	int head_idx,tail_idx;
-	bool last; //0 = pop, 1 = push
+	int last; //0 = pop, 1 = push
 
 public:
 	MemberQueue();

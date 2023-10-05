@@ -15,9 +15,10 @@ public:
 
 	void Insert(char* p_name,int p_age,int p_year,
 	int p_month,int p_day,char p_term);
+	
 
 	TermsBSTNode* Search(int p_year,
-	int p_month,int p_day,char p_term);
+	int p_month,int p_day);
 
 	void Delete(int p_year,
 	int p_month,int p_day,char p_term);

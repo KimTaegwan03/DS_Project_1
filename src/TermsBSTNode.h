@@ -28,6 +28,9 @@ public:
 		end_month = p_month;
 		end_day = p_day;
 		term = p_term;
+
+		left = nullptr;
+		right = nullptr;
 		
 		if (p_term == 'A') {
 			end_month += 6;
@@ -51,7 +54,10 @@ public:
 		end_month = p_month;
 		end_day = p_day;
 	}
-	~TermsBSTNode() {}
+	~TermsBSTNode() {
+		if(left) delete left;
+		if(right) delete right;
+	}
 
 	TermsBSTNode*	getLeft()			{ return left; }
 	TermsBSTNode*	getRight()			{ return right; }

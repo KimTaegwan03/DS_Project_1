@@ -15,10 +15,10 @@ public:
 	TermsListNode(char p_term) {
 		term = p_term;
 		member = 0;
-		bst = 0;
+		bst = new TermsBST;
 		next = 0;
 	}
-	~TermsListNode() {delete bst;}
+	~TermsListNode() {if(bst)delete bst;}
 
 	TermsListNode*	getNext()		 { return next; }
 	char getTerm(){return term;}

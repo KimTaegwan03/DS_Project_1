@@ -7,7 +7,7 @@ NameBST::NameBST() : root(nullptr)
 }
 NameBST::~NameBST()
 {
-
+	if(root) delete root;
 }
 
 NameBSTNode* NameBST::getRoot()
@@ -17,20 +17,25 @@ NameBSTNode* NameBST::getRoot()
 
 void NameBST::Insert(NameBSTNode* param){
 	NameBSTNode* cur = root;
+
+	if (!root) {
+		root = param;
+		return;
+	}
 	while(cur){
 		if(strcmp(cur->getName(),param->getName())>0){
-			if(cur->getLeft()==0){
+			if(!cur->getLeft()){
 				cur->setLeft(param);
-				break;
+				return;
 			}
 			else{
 				cur = cur->getLeft();
 			}
 		}
 		else if(strcmp(cur->getName(),param->getName())<=0){
-			if(cur->getRight()==0){
+			if(!cur->getRight()){
 				cur->setRight(param);
-				break;
+				return;
 			}
 			else{
 				cur = cur->getRight();
@@ -39,14 +44,12 @@ void NameBST::Insert(NameBSTNode* param){
 	}
 }
 
-void NameBST::Print(NameBSTNode* node){
-	if(node != 0){
+void NameBST::Print(ofstream& flog, NameBSTNode* node){
+	if(!node){
 		ofstream flog;
-		Print(node->getLeft());
-		flog.open("log.txt",ios::app);
+		Print(flog,node->getLeft());
 		flog << node->getName()<<'/'<<node->getAge()<<'/'<<node->getYear()<<'-'<<node->getMonth()<<'-'<<node->getDay()<<'/'<<node->getEndYear()<<'-'<<node->getEndMonth()<<'-'<<node->getEndDay()<<endl;
-		flog.close();
-		Print(node->getRight());
+		Print(flog,node->getRight());
 	}
 }
 
@@ -57,12 +60,12 @@ NameBSTNode* NameBST::Delete(NameBSTNode* cur, NameBSTNode* find){
 	else if(strcmp(cur->getName(),find->getName())<0)
 		cur->setRight(Delete(cur->getRight(),find));
 	else{
-		if(cur->getLeft()==0){
+		if(!cur->getLeft()){
 			NameBSTNode* tmp = cur->getRight();
 			delete cur;
 			return tmp;
 		}
-		else if(cur->getRight()==0){
+		else if(!cur->getRight()){
 			NameBSTNode* tmp = cur->getLeft();
 			delete cur;
 			return tmp;
@@ -91,8 +94,6 @@ NameBSTNode* NameBST::Search(NameBSTNode* find){
 		else if(strcmp(cur->getName(),find->getName())<0)
 			cur = cur->getRight();
 		else break;
-
-		if(!cur) break;
 	}
 	return cur;
 }

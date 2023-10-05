@@ -30,9 +30,17 @@ public:
 
 	void LOAD();
 	// LOAD
+	void ADD(char* info);
 	// ADD
+
+	void QPOP();
 	// QPOP
+	void SEARCH(char* find);
 	// SEARCH
+
+	void PRINT(char* p);
 	// PRINT
+
+	void DELETE(char* param);
 	// DELETE
 };

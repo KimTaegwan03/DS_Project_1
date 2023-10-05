@@ -17,6 +17,13 @@ public:
 	}
 	~MemberQueueNode() {}
 
+	char* getName() {return name;};
+	int getAge() {return age;}
+	int getYear() {return year;}
+	int getMonth() {return month;}
+	int getDay() {return day;}
+	char getTerm() {return term;}
+
 	void setInfo(char* p_name,int p_age,int p_year,
 	int p_month,int p_day,char p_term){
 		strcpy(name,p_name);
