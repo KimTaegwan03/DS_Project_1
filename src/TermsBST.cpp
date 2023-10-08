@@ -7,9 +7,11 @@ TermsBST::TermsBST() : root(nullptr)
 }
 TermsBST::~TermsBST()
 {
-	if(root) delete root;
+	// Delete all node
+	while(root){
+		Delete(root);
+	}
 }
-
 
 TermsBSTNode* TermsBST::getRoot()
 {
@@ -30,8 +32,7 @@ int TermsBST::compare_end_term(TermsBSTNode* first,TermsBSTNode* second){	// ret
 	}
 }
 
-
-void TermsBST::Insert(TermsBSTNode* param){
+void TermsBST::Insert(TermsBSTNode* param){		// Insert parameter node to correct position
 	TermsBSTNode* cur = root;
 
 	if (!root) {
@@ -40,7 +41,7 @@ void TermsBST::Insert(TermsBSTNode* param){
 	}
 
 	while(cur){
-		if(compare_end_term(cur,param)>0){
+		if(compare_end_term(cur,param)>0){		// faster than cur node, go left
 			if(!cur->getLeft()){
 				cur->setLeft(param);
 				break;
@@ -49,7 +50,7 @@ void TermsBST::Insert(TermsBSTNode* param){
 				cur = cur->getLeft();
 			}
 		}
-		else if(compare_end_term(cur,param)<=0){
+		else if(compare_end_term(cur,param)<=0){	// later than cur node, go right
 			if(!cur->getRight()){
 				cur->setRight(param);
 				break;
@@ -63,6 +64,7 @@ void TermsBST::Insert(TermsBSTNode* param){
 
 }
 
+// Print node info
 void TermsBST::Print(ofstream& flog, TermsBSTNode* node){
 	if(node){
 		Print(flog,node->getLeft());
@@ -71,45 +73,67 @@ void TermsBST::Print(ofstream& flog, TermsBSTNode* node){
 	}
 }
 
-TermsBSTNode* TermsBST::Delete(TermsBSTNode* cur,TermsBSTNode* find){
-	if(!cur) return cur;
-	if(compare_end_term(cur,find)>0)
-		cur->setLeft(Delete(cur->getLeft(),find));
-	else if(compare_end_term(cur,find)<0)
-		cur->setRight(Delete(cur->getRight(),find));
-	else{	//find
-		if(cur->getLeft()==0){
-			TermsBSTNode* tmp = cur->getRight();
-			delete cur;
-			return tmp;
-		}
-		else if(cur->getRight()==0){
-			TermsBSTNode* tmp = cur->getLeft();
-			delete cur;
-			return tmp;
-		}
+// Delete function
+void TermsBST::Delete(TermsBSTNode* find){
+	TermsBSTNode* cur = root;
+	TermsBSTNode* pre = nullptr;
 
-		TermsBSTNode* tmp = Find_Min_Node(cur->getRight());
-		cur->setInfo(tmp);
-		cur->setRight(Delete(cur->getRight(),tmp));
+	while (cur) {
+		if (compare_end_term(cur, find) > 0) {	// faster than cur, go left
+			pre = cur;
+			cur = cur->getLeft();
+		}
+		else if (compare_end_term(cur, find) < 0) {	// later than cur, go right
+			pre = cur;
+			cur = cur->getRight();
+		}
+		else break;
 	}
-	return cur;
-		
 
+	if (!cur) return;
+
+	if (!cur->getLeft()&&!cur->getRight()) {	// leaf case
+		if (!pre) {
+			delete root;
+			root = 0;
+			return;
+		}
+		else if (pre->getLeft() == cur) pre->setLeft(nullptr);
+		else pre->setRight(nullptr);
+		delete cur;
+		return;
+	}
+	else if (!cur->getLeft()) {		// exist only left node
+		if (!pre) root = cur->getRight();
+		else if (pre->getLeft() == cur) pre->setLeft(cur->getRight());
+		else pre->setRight(cur->getRight());
+		delete cur;
+		return;
+	}
+	else if (!cur->getRight()) {	// exist only right node
+		if (!pre) root = cur->getLeft();
+		else if (pre->getLeft() == cur) pre->setLeft(cur->getLeft());
+		else pre->setRight(cur->getLeft());
+		delete cur;
+		return;
+	}
+	else {	// exist both node
+		TermsBSTNode* p2 = cur, * p1 = cur->getRight(), * p0 = cur->getRight()->getLeft();
+
+		while (p0) {
+			p2 = p1;
+			p1 = p0;
+			p0 = p0->getLeft();
+		}
+
+		cur->setInfo(p1);
+		if (p2 == cur) p2->setRight(p1->getRight());
+		else p2->setLeft(p1->getRight());
+		delete p1;
+		return;
+	}
 }
 
-TermsBSTNode* TermsBST::Find_Min_Node(TermsBSTNode* cur){
-	TermsBSTNode* ptr = cur;
-	while(ptr->getLeft()){
-		ptr = ptr->getLeft();
-	}
-	return ptr;
-}
-// insert
-
-// print
-
-// delete
 TermsBSTNode* TermsBST::Search(TermsBSTNode* find){
 	TermsBSTNode* cur = root;
 	while(cur){
@@ -121,4 +145,16 @@ TermsBSTNode* TermsBST::Search(TermsBSTNode* find){
 	}
 	return cur;
 
+}
+
+
+TermsBSTNode* TermsBST::SearchLesser(TermsBSTNode* find) {
+	TermsBSTNode* cur = root;
+	while (cur) {
+		if (compare_end_term(cur, find) >= 0)
+			cur = cur->getLeft();
+		else if (compare_end_term(cur, find) < 0)
+			break;
+	}
+	return cur;
 }

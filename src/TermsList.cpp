@@ -7,6 +7,7 @@ TermsLIST::TermsLIST()
 }
 TermsLIST::~TermsLIST()
 {
+	// Delete all node
 	TermsListNode* tmp;
 	while(head){
 		tmp = head->getNext();
@@ -20,6 +21,7 @@ TermsListNode* TermsLIST::getHead()
 	return head;
 }
 
+// Insert function, Allocate new node and insert to correct position
 void TermsLIST::Insert(char* p_name,int p_age,int p_year, int p_month,int p_day,char p_term){
 	TermsBSTNode* ptr = new TermsBSTNode(p_name,p_age,p_year,p_month,p_day,p_term);
 	TermsListNode* cur = head;
@@ -50,11 +52,13 @@ void TermsLIST::Insert(char* p_name,int p_age,int p_year, int p_month,int p_day,
 	}
 
 }
-// insert
 
+// Search same node and return the node
 TermsBSTNode* TermsLIST::Search(int p_year,
 	int p_month,int p_day){
 	TermsListNode* cur = head;
+
+	// Repeat while search node complete
 	while(cur){
 		TermsBSTNode* ptr = new TermsBSTNode(p_year,p_month,p_day);
 		TermsBSTNode* out = cur->getBST()->Search(ptr);
@@ -67,9 +71,7 @@ TermsBSTNode* TermsLIST::Search(int p_year,
 	return nullptr;
 }
 
-// search
-
-
+// Delete same node
 void TermsLIST::Delete(int p_year, int p_month,int p_day,char p_term){
 	TermsListNode* cur = head;
 	TermsListNode* pre = nullptr;
@@ -83,9 +85,9 @@ void TermsLIST::Delete(int p_year, int p_month,int p_day,char p_term){
 
 	if(cur){
 		TermsBSTNode* ptr = new TermsBSTNode(p_year,p_month,p_day);
-		cur->getBST()->Delete(cur->getBST()->getRoot(),ptr);
+		cur->getBST()->Delete(ptr);
 		cur->decreaseMem();
-		if(cur->getMem()==0){
+		if(cur->getMem()==0){	// if member is 0, delete list node
 			if(pre){
 				if(cur==tail){
 					tail = pre;
@@ -100,4 +102,18 @@ void TermsLIST::Delete(int p_year, int p_month,int p_day,char p_term){
 		delete ptr;
 	}
 }
-// delete
+
+// Search faster node than parameter date
+TermsBSTNode* TermsLIST::SearchLesser(int p_year, int p_month, int p_day) {
+	TermsListNode* cur = head;
+	while (cur) {
+		TermsBSTNode* ptr = new TermsBSTNode(p_year, p_month, p_day);
+		TermsBSTNode* out = cur->getBST()->SearchLesser(ptr);
+		delete ptr;
+		if (out)
+			return out;
+		else
+			cur = cur->getNext();
+	}
+	return nullptr;
+}

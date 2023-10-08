@@ -12,20 +12,17 @@ public:
 	~TermsBST();
 
 	TermsBSTNode* getRoot();
+	void setRoot(TermsBSTNode* p) { root = p; }
+	void resetRoot() { root = 0; }
 
 	int compare_end_term(TermsBSTNode* first,TermsBSTNode* second);
-
-	int compare_term(TermsBSTNode* first,TermsBSTNode* second);
 
 	void Insert(TermsBSTNode* param);
 
 	void Print(std::ofstream& flog, TermsBSTNode* node);
 
-	TermsBSTNode* Delete(TermsBSTNode* cur,TermsBSTNode* find);
+	void Delete(TermsBSTNode* find);
 
-	TermsBSTNode* Find_Min_Node(TermsBSTNode* cur);
-	// insert
-	// print
-	// delete
 	TermsBSTNode* Search(TermsBSTNode* find);
+	TermsBSTNode* SearchLesser(TermsBSTNode* find);
 };

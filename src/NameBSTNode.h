@@ -29,6 +29,7 @@ public:
 		end_day = p_day;
 		term = p_term;
 
+		// Calculate end date
 		if (p_term == 'A') {
 			end_month += 6;
 			if (end_month > 12) {
@@ -53,10 +54,7 @@ public:
 		left = nullptr;
 		right = nullptr;
 	}
-	~NameBSTNode() {
-		if(left) delete left;
-		if(right) delete right;
-	}
+	~NameBSTNode() {}
 
 	NameBSTNode*	getLeft()			{ return left; }
 	NameBSTNode*	getRight()			{ return right; }

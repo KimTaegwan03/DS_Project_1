@@ -18,7 +18,7 @@ public:
 		bst = new TermsBST;
 		next = 0;
 	}
-	~TermsListNode() {if(bst)delete bst;}
+	~TermsListNode() {delete bst;}
 
 	TermsListNode*	getNext()		 { return next; }
 	char getTerm(){return term;}

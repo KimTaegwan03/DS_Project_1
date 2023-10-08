@@ -8,10 +8,11 @@ MemberQueue::MemberQueue()
 }
 
 MemberQueue::~MemberQueue()
-{
+{   
 
 }
 
+// empty function, if queue is empty return true
 bool MemberQueue::empty()
 {
     if(head_idx == tail_idx) {
@@ -24,6 +25,7 @@ bool MemberQueue::empty()
         return false;
 }
 
+// full function, if queue is full return true
 bool MemberQueue::full()
 {
     if(head_idx == tail_idx) {
@@ -33,6 +35,7 @@ bool MemberQueue::full()
     else return false;
 }
 
+// push function
 void MemberQueue::push(char* p_name,int p_age,int p_year,
 	int p_month,int p_day,char p_term)
 {
@@ -43,6 +46,7 @@ void MemberQueue::push(char* p_name,int p_age,int p_year,
     }
 }
 
+// pop function
 MemberQueueNode MemberQueue::pop()
 {
     if(!this->empty()){
@@ -52,6 +56,7 @@ MemberQueueNode MemberQueue::pop()
     }
 }
 
+// front function, return front member node
 MemberQueueNode MemberQueue::front()
 {
     if(!empty())

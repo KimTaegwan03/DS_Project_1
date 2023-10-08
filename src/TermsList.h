@@ -19,11 +19,9 @@ public:
 
 	TermsBSTNode* Search(int p_year,
 	int p_month,int p_day);
+	TermsBSTNode* SearchLesser(int p_year,
+	int p_month,int p_day);
 
 	void Delete(int p_year,
 	int p_month,int p_day,char p_term);
-
-	// insert
-	// search
-	// delete
 };

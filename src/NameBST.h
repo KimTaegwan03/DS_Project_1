@@ -17,14 +17,7 @@ public:
 
 	void Print(std::ofstream& flog, NameBSTNode* node);
 
-	NameBSTNode* Delete(NameBSTNode* cur, NameBSTNode* find);
-
-	NameBSTNode* Find_Min_Node(NameBSTNode* cur);
+	void Delete(NameBSTNode* find);
 
 	NameBSTNode* Search(NameBSTNode* find);
-
-	// insert
-	// search
-	// print
-	// delete
 };

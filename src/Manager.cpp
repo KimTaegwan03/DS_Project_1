@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "Manager.h"
 
 Manager::Manager()
@@ -6,6 +7,8 @@ Manager::Manager()
     termlis = nullptr;
     nameBST = nullptr;
 }
+
+
 Manager::~Manager()
 {
     if(memq) delete memq;
@@ -13,6 +16,7 @@ Manager::~Manager()
     if(nameBST) delete nameBST;
 }
 
+//run
 void Manager::run(const char* command)
 {
      // Open command & log file
@@ -26,16 +30,20 @@ void Manager::run(const char* command)
     
     char cmd[64];
     while(!fcmd.eof()){
-        //fcmd >> cmd;
         char* p = 0;
-
+        
+        // Read command
         fcmd.getline(cmd, 64);
+
 
         if (!strcmp(cmd, "")) break;
 
         p = strtok(cmd, " ");
 
+        // LOAD command
         if(!strcmp(p,"LOAD")){
+
+            // No Member Queue, Allocate Member Queue and LOAD
             if(!memq){
                 memq = new MemberQueue;
                 LOAD();
@@ -44,30 +52,40 @@ void Manager::run(const char* command)
                 PrintErrorCode(100);
             }
         }
+        // ADD command
         else if(!strcmp(p,"ADD")){
             p = strtok(NULL, "");
             ADD(p);
 
         }
+        // QPOP command
         else if(!strcmp(p,"QPOP")){
             QPOP();
         }
+        //SEARCH command
         else if(!strcmp(p ,"SEARCH")){
             p = strtok(NULL, "");
             SEARCH(p);
         }
+        // PRINT command
         else if(!strcmp(p,"PRINT")){
             p = strtok(NULL, "");
             PRINT(p);
         }
+        // DELETE command
         else if(!strcmp(p,"DELETE")){
             p = strtok(NULL,"");
             DELETE(p);
         }
+        // EXIT command
         else if(!strcmp(p,"EXIT")){
-            if(memq) delete memq;
-            if(nameBST) delete nameBST;
-            if(termlis) delete termlis;
+            delete memq;
+            delete nameBST;
+            delete termlis;
+            memq = 0;
+            nameBST = 0;
+            termlis = 0;
+            PrintSuccess("EXIT");
             fcmd.close();
             flog.close();
             return;
@@ -76,9 +94,8 @@ void Manager::run(const char* command)
             PrintErrorCode(1000);
         }
     }
-    // Run command
 
-
+    // Close file
     fcmd.close();
     flog.close();
     return;
@@ -97,9 +114,12 @@ void Manager::PrintErrorCode(int num)
     flog << "===============" << endl << endl;
 }
 
+// LOAD function
 void Manager::LOAD()
 {
     ifstream fdata;
+
+    // Open data.txt file
     fdata.open("data.txt");
     if(!fdata){
         PrintErrorCode(100);
@@ -117,6 +137,7 @@ void Manager::LOAD()
 
     flog<<"===== LOAD ====="<<endl;
 
+    // Read data.txt
     while(!fdata.eof()){
         char* p = nullptr;
 
@@ -124,13 +145,15 @@ void Manager::LOAD()
 
         if (!strcmp(info, "")) break;
 
+        // Get name
         p = strtok(info, " ");
         strcpy(name, p);
 
-        //  2004-06-05
+        // Get age
         p = strtok(NULL, " ");
         age = atoi(p);
 
+        // Get date
         p = strtok(NULL, " ");
         for (int i = 0; i < 4; i++) {
             year_c[i] = p[i];
@@ -149,24 +172,21 @@ void Manager::LOAD()
         month = atoi(month_c);
         day = atoi(day_c);
 
+        // Get term
         p = strtok(NULL, " ");
         term = p[0];
 
+        // Push
         if (!memq->full()) {
             memq->push(name, age, year, month, day, term);
             flog<<name<<'/'<<age<<'/'<<year_c<<'-'<<month_c<<'-'<<day_c<<'/'<<term<<endl;
         }
-
-        // fdata.getline(data_tmp,100);
-        // strtok(p," ");
-        // name = p;
-        // strtok(NULL," ");
-
     }
     flog<<"==============="<<endl<<endl;
     fdata.close();
 }
-// LOAD
+
+// ADD function
 void Manager::ADD(char* info) {
     char name[21];
     int age = 0;
@@ -179,13 +199,27 @@ void Manager::ADD(char* info) {
     char term = 0;
     char* p = nullptr;
 
+    // Detect Parameter Error
+    int len = strlen(info);
+    int blank = 0;
+    for(int i = 0;i<len;i++){
+        if(info[i] == ' ')
+            blank++;
+    }
+    if(blank!=3){
+        PrintErrorCode(200);
+        return;
+    }
+    
+    // Get name
     p = strtok(info, " ");
     strcpy(name, p);
 
-    //  2004-06-05
+    // Get age
     p = strtok(NULL, " ");
     age = atoi(p);
 
+    // Get date
     p = strtok(NULL, " ");
     for (int i = 0; i < 4; i++) {
         year_c[i] = p[i];
@@ -204,43 +238,59 @@ void Manager::ADD(char* info) {
     month = atoi(month_c);
     day = atoi(day_c);
 
+    // Get term
     p = strtok(NULL, " ");
     term = p[0];
 
+    // Push
     if (!memq->full()){
         memq->push(name, age, year, month, day, term);
         flog<<"===== ADD ====="<<endl;
         flog<<name<<'/'<<age<<'/'<<year_c<<'-'<<month_c<<'-'<<day_c<<'/'<<term<<endl;
         flog<<"==============="<<endl<<endl;
     }
-
 }
-// ADD
 
+// QPOP function
 void Manager::QPOP() {
+
+    // Work when memq exist
     if (memq) {
         while (!memq->empty()) {
-            if (!termlis)
+            // No TermsList, Allocate new one
+            if (!termlis){
                 termlis = new TermsLIST;
+            }
 
+            // Insert front member of member queue to TermsList
             termlis->Insert(memq->front().getName(), memq->front().getAge(), memq->front().getYear(), memq->front().getMonth(), memq->front().getDay(), memq->front().getTerm());
             
+            // Allocate NameBSTNode with front member of member queue
             NameBSTNode* nameNode = new NameBSTNode(memq->front().getName(), memq->front().getAge(), memq->front().getYear(), memq->front().getMonth(), memq->front().getDay(), memq->front().getTerm());
             
+            // No NameBST, Allocate new one
             if (!nameBST)
                 nameBST = new NameBST;
             
+            // Insert the NameNode to NameBST
             nameBST->Insert(nameNode);
+
+            // POP member queue
             memq->pop();
         }
         PrintSuccess("QPOP");
     }
 }
-// QPOP
 
+// SEARCH function
 void Manager::SEARCH(char* find) {
+    // Allocate node for finding
     NameBSTNode* find_node = new NameBSTNode(find);
+
+    // Get node from Search function of NameBST
     NameBSTNode* search_node = nameBST->Search(find_node);
+
+    // If the node exist Print node info
     if (search_node) {
         flog << "===== SEARCH =====\n";
         flog << search_node->getName() << '/' << search_node->getAge() << '/' << search_node->getYear()<<'-'<< search_node->getMonth()<<'-'<< search_node->getDay()<<'/' << search_node->getEndYear() << '-' << search_node->getEndMonth() << '-' << search_node->getEndDay()<<endl;
@@ -248,18 +298,22 @@ void Manager::SEARCH(char* find) {
     }
     delete find_node;
 }
-// SEARCH
 
+// PRINT function
 void Manager::PRINT(char* p){
+
+    // Term print
     if(!strcmp(p,"A")||!strcmp(p,"B")||!strcmp(p,"C")||!strcmp(p,"D")){
         if(termlis){
             TermsListNode* cur = termlis->getHead();
             
+            // Find same term node
             while(cur){
                 if(p[0] == cur->getTerm()) break;
                 else cur = cur->getNext();
             }
-
+            
+            // Print all node info of termBST
             if(cur){
                 flog<<"===== PRINT ====="<<endl;
                 flog<<"Terms_BST "<<p[0]<<endl;
@@ -274,7 +328,10 @@ void Manager::PRINT(char* p){
             PrintErrorCode(500);
         }
     }
+    // Name print
     else if(!strcmp(p,"NAME")){
+
+        // Print all node info of NameBST
         if(nameBST){
             flog<<"===== PRINT ====="<<endl;
             flog<<"Name_BST "<<endl;
@@ -289,9 +346,13 @@ void Manager::PRINT(char* p){
         PrintErrorCode(500);
     }
 }
-// PRINT
+
+// DELETE function
 void Manager::DELETE(char* param){
-    char* p = param;
+    char* p;
+    p = strtok(param, " ");
+
+    // Date Delete
     if(!strcmp(p,"DATE")){
         char year_c[5];
         char month_c[3];
@@ -317,19 +378,29 @@ void Manager::DELETE(char* param){
         month = atoi(month_c);
         day = atoi(day_c);
         
-        TermsBSTNode* search_node = termlis->Search(year,month,day);
-        if(search_node){
-            char delete_name[21];
-            strcpy(delete_name,search_node->getName());
-            termlis->Delete(year,month,day,search_node->getTerm());
-            NameBSTNode* find = new NameBSTNode(delete_name);
-            nameBST->Delete(nameBST->getRoot(),find);
-            delete find;
-        }
-        else{
+        // Search node lesser than parameter date
+        TermsBSTNode* search_node = termlis->SearchLesser(year, month, day);
+        if (!search_node) {
             PrintErrorCode(600);
         }
+
+        // Delete all lesser node
+        while (search_node) {
+            char delete_name[21];
+            int s_year = search_node->getEndYear();
+            int s_month = search_node->getEndMonth();
+            int s_day = search_node->getEndDay();
+            strcpy(delete_name, search_node->getName());
+            termlis->Delete(s_year, s_month, s_day, search_node->getTerm());
+            NameBSTNode* find = new NameBSTNode(delete_name);
+            nameBST->Delete(find);
+            delete find;
+            search_node = termlis->SearchLesser(year, month, day);
+        }
+        PrintSuccess("DELETE");
     }
+
+    // Name Delete, Search node and delete the node
     else if(!strcmp(p,"NAME")){
         p = strtok(NULL," ");
         NameBSTNode* ptr = new NameBSTNode(p);
@@ -341,8 +412,9 @@ void Manager::DELETE(char* param){
             year = search_node->getEndYear();
             month = search_node->getEndMonth();
             day = search_node->getEndDay();
-            nameBST->Delete(nameBST->getRoot(),ptr);
+            nameBST->Delete(ptr);
             termlis->Delete(year,month,day,term);
+            PrintSuccess("DELETE");
         }
         else{
             PrintErrorCode(600);
