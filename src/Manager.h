@@ -24,7 +24,7 @@ public:
 	~Manager();
 
 	void run(const char* command);
-	
+
 	void PrintSuccess(const char* cmd);
 	void PrintErrorCode(int num);
 

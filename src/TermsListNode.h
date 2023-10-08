@@ -13,9 +13,9 @@ private:
 
 public:
 	TermsListNode(char p_term) {
+		bst = new TermsBST;
 		term = p_term;
 		member = 0;
-		bst = new TermsBST;
 		next = 0;
 	}
 	~TermsListNode() {delete bst;}

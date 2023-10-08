@@ -1,4 +1,6 @@
 #pragma once
+#define _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <cstring>
 
@@ -17,7 +19,7 @@ public:
 	}
 	~MemberQueueNode() {}
 
-	char* getName() {return name;};
+	char* getName() {return name;}
 	int getAge() {return age;}
 	int getYear() {return year;}
 	int getMonth() {return month;}
