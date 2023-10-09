@@ -25,7 +25,7 @@ void Manager::run(const char* command)
     if (!fcmd)
     {
         flog << "Fail to open command file" << endl;
-        exit(-2);
+        exit(-1);
     }
     
     char cmd[64];
@@ -55,33 +55,53 @@ void Manager::run(const char* command)
         // ADD command
         else if(!strcmp(p,"ADD")){
             p = strtok(NULL, "");
-            ADD(p);
+
+            // No Member Queue, Allocate Member Queue and ADD
+            if(!memq){
+                memq = new MemberQueue;
+                ADD(p);
+            }
+            else{
+                ADD(p);
+            }
 
         }
         // QPOP command
         else if(!strcmp(p,"QPOP")){
-            QPOP();
+            if(memq)
+                QPOP();
+            else
+                PrintErrorCode(300);
         }
         //SEARCH command
         else if(!strcmp(p ,"SEARCH")){
             p = strtok(NULL, "");
-            SEARCH(p);
+            if(nameBST||termlis)
+                SEARCH(p);
+            else
+                PrintErrorCode(400);
         }
         // PRINT command
         else if(!strcmp(p,"PRINT")){
             p = strtok(NULL, "");
-            PRINT(p);
+            if(nameBST||termlis)
+                PRINT(p);
+            else   
+                PrintErrorCode(500);
         }
         // DELETE command
         else if(!strcmp(p,"DELETE")){
             p = strtok(NULL,"");
-            DELETE(p);
+            if(nameBST||termlis)
+                DELETE(p);
+            else
+                PrintErrorCode(600);
         }
         // EXIT command
         else if(!strcmp(p,"EXIT")){
-            delete memq;
-            delete nameBST;
-            delete termlis;
+            if(memq) delete memq;
+            if(nameBST) delete nameBST;
+            if(termlis) delete termlis;
             memq = 0;
             nameBST = 0;
             termlis = 0;
