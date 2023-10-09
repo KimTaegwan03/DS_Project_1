@@ -124,9 +124,9 @@ void NameBST::Delete(NameBSTNode* find){
 NameBSTNode* NameBST::Search(NameBSTNode* find){
 	NameBSTNode* cur = root;
 	while(cur){
-		if(strcmp(cur->getName(),find->getName())<0)
+		if(strcmp(cur->getName(),find->getName())>0)
 			cur = cur->getLeft();
-		else if(strcmp(cur->getName(),find->getName())>0)
+		else if(strcmp(cur->getName(),find->getName())<0)
 			cur = cur->getRight();
 		else break;
 	}

@@ -402,6 +402,7 @@ void Manager::DELETE(char* param){
         TermsBSTNode* search_node = termlis->SearchLesser(year, month, day);
         if (!search_node) {
             PrintErrorCode(600);
+            return;
         }
 
         // Delete all lesser node
