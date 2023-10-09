@@ -50,6 +50,12 @@ public:
 			end_year+=3;
 		}
 	}
+	TermsBSTNode(char* p_name, int p_year, int p_month, int p_day) {
+		strcpy(name,p_name);
+		end_year = p_year;
+		end_month = p_month;
+		end_day = p_day;
+	}
 	TermsBSTNode(int p_year, int p_month, int p_day) {
 		end_year = p_year;
 		end_month = p_month;

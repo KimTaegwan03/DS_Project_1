@@ -87,7 +87,11 @@ void TermsBST::Delete(TermsBSTNode* find){
 			pre = cur;
 			cur = cur->getRight();
 		}
-		else break;
+		else if (strcmp(cur->getName(),find->getName())==0) break;
+		else{
+			pre = cur;
+			cur = cur->getRight();
+		}
 	}
 
 	if (!cur) return;

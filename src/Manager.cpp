@@ -412,7 +412,7 @@ void Manager::DELETE(char* param){
             int s_month = search_node->getEndMonth();
             int s_day = search_node->getEndDay();
             strcpy(delete_name, search_node->getName());
-            termlis->Delete(s_year, s_month, s_day, search_node->getTerm());
+            termlis->Delete(delete_name, s_year, s_month, s_day, search_node->getTerm());
             NameBSTNode* find = new NameBSTNode(delete_name);
             nameBST->Delete(find);
             delete find;
@@ -434,7 +434,7 @@ void Manager::DELETE(char* param){
             month = search_node->getEndMonth();
             day = search_node->getEndDay();
             nameBST->Delete(ptr);
-            termlis->Delete(year,month,day,term);
+            termlis->Delete(p,year,month,day,term);
             PrintSuccess("DELETE");
         }
         else{

@@ -72,7 +72,7 @@ TermsBSTNode* TermsLIST::Search(int p_year,
 }
 
 // Delete same node
-void TermsLIST::Delete(int p_year, int p_month,int p_day,char p_term){
+void TermsLIST::Delete(char* p_name, int p_year, int p_month,int p_day,char p_term){
 	TermsListNode* cur = head;
 	TermsListNode* pre = nullptr;
 	while(cur){
@@ -84,7 +84,7 @@ void TermsLIST::Delete(int p_year, int p_month,int p_day,char p_term){
 	}
 
 	if(cur){
-		TermsBSTNode* ptr = new TermsBSTNode(p_year,p_month,p_day);
+		TermsBSTNode* ptr = new TermsBSTNode(p_name, p_year,p_month,p_day);
 		cur->getBST()->Delete(ptr);
 		cur->decreaseMem();
 		if(cur->getMem()==0){	// if member is 0, delete list node
