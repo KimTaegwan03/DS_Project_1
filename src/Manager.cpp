@@ -14,6 +14,10 @@ Manager::~Manager()
     if(memq) delete memq;
     if(termlis) delete termlis;
     if(nameBST) delete nameBST;
+    if(fcmd)
+        fcmd.close();
+    if(flog)
+        flog.close();
 }
 
 //run
@@ -106,8 +110,6 @@ void Manager::run(const char* command)
             nameBST = 0;
             termlis = 0;
             PrintSuccess("EXIT");
-            fcmd.close();
-            flog.close();
             return;
         }
         else {
@@ -115,9 +117,6 @@ void Manager::run(const char* command)
         }
     }
 
-    // Close file
-    fcmd.close();
-    flog.close();
     return;
 }
 
@@ -201,6 +200,7 @@ void Manager::LOAD()
             memq->push(name, age, year, month, day, term);
             flog<<name<<'/'<<age<<'/'<<year_c<<'-'<<month_c<<'-'<<day_c<<'/'<<term<<endl;
         }
+        else exit(-1);
     }
     flog<<"==============="<<endl<<endl;
     fdata.close();
@@ -269,6 +269,7 @@ void Manager::ADD(char* info) {
         flog<<name<<'/'<<age<<'/'<<year_c<<'-'<<month_c<<'-'<<day_c<<'/'<<term<<endl;
         flog<<"==============="<<endl<<endl;
     }
+    else exit(-1);
 }
 
 // QPOP function
@@ -276,6 +277,8 @@ void Manager::QPOP() {
 
     // Work when memq exist
     if (memq) {
+        if(memq->empty()) exit(-1);
+
         while (!memq->empty()) {
             // No TermsList, Allocate new one
             if (!termlis){

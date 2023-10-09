@@ -17,7 +17,7 @@ public:
 	int p_month,int p_day,char p_term);
 	
 
-	TermsBSTNode* Search(int p_year,
+	TermsBSTNode* Search(char* p_name, int p_year,
 	int p_month,int p_day);
 	TermsBSTNode* SearchLesser(int p_year,
 	int p_month,int p_day);

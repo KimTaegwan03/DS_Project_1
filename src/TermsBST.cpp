@@ -145,7 +145,8 @@ TermsBSTNode* TermsBST::Search(TermsBSTNode* find){
 			cur = cur->getLeft();
 		else if(compare_end_term(cur,find)<0)
 			cur = cur->getRight();
-		else break;
+		else if (strcmp(cur->getName(),find->getName())==0) break;
+		else cur = cur->getRight();
 	}
 	return cur;
 

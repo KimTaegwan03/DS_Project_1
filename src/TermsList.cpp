@@ -5,6 +5,7 @@ TermsLIST::TermsLIST()
 	head = 0;
 	tail = 0;
 }
+
 TermsLIST::~TermsLIST()
 {
 	// Delete all node
@@ -54,13 +55,13 @@ void TermsLIST::Insert(char* p_name,int p_age,int p_year, int p_month,int p_day,
 }
 
 // Search same node and return the node
-TermsBSTNode* TermsLIST::Search(int p_year,
+TermsBSTNode* TermsLIST::Search(char* p_name,int p_year,
 	int p_month,int p_day){
 	TermsListNode* cur = head;
 
 	// Repeat while search node complete
 	while(cur){
-		TermsBSTNode* ptr = new TermsBSTNode(p_year,p_month,p_day);
+		TermsBSTNode* ptr = new TermsBSTNode(p_name, p_year,p_month,p_day);
 		TermsBSTNode* out = cur->getBST()->Search(ptr);
 		delete ptr;
 		if(out)
